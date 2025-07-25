@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-theme nav {
+            background-color: #2c2c2c;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        body.dark-theme .logo {
+            color: #e0e0e0;
+        }
+
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+
+        body.dark-theme .nav-links a {
+            color: #e0e0e0;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        body.dark-theme .theme-toggle {
+            color: #e0e0e0;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark-theme h1, body.dark-theme h2 {
+            color: #e0e0e0;
+        }
+
+        /* Hero Section */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+            color: white;
+            text-align: center;
+        }
+
+        body.dark-theme #home {
+            background: linear-gradient(45deg, #1e4d7a, #4b2354);
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 2rem auto;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        /* About, Skills, Projects, Contact */
+        .about-content, .skills-content, .projects-content, .contact-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-theme .about-content,
+        body.dark-theme .skills-content,
+        body.dark-theme .projects-content,
+        body.dark-theme .contact-content {
+            background: #2c2c2c;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        body.dark-theme .skill-item {
+            background: #1e4d7a;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-theme .project-card {
+            background: #2c2c2c;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-card h3 {
+            padding: 1rem;
+            color: #2c3e50;
+        }
+
+        body.dark-theme .project-card h3 {
+            color: #e0e0e0;
+        }
+
+        .project-card p {
+            padding: 0 1rem 1rem;
+            color: #666;
+        }
+
+        body.dark-theme .project-card p {
+            color: #b0b0b0;
+        }
+
+        .contact-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-content input, .contact-content textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        body.dark-theme .contact-content input,
+        body.dark-theme .contact-content textarea {
+            background: #3c3c3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .contact-content button {
+            padding: 0.8rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        body.dark-theme .contact-content button {
+            background: #1e4d7a;
+        }
+
+        .contact-content button:hover {
+            background: #2980b9;
+        }
+
+        /* Chat Bubble */
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        body.dark-theme .chat-bubble {
+            background: #1e4d7a;
+        }
+
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+
+        /* Chat Overlay */
+        .chat-overlay {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            max-width: 90%;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        body.dark-theme .chat-overlay {
+            background: #2c2c2c;
+        }
+
+        .chat-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        body.dark-theme .chat-header {
+            background: #1e4d7a;
+        }
+
+        .chat-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header h3 {
+            font-size: 1.2rem;
+        }
+
+        .chat-close {
+            cursor: pointer;
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        body.dark-theme .chat-body {
+            background: #3c3c3c;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message.user {
+            align-items: flex-end;
+        }
+
+        .chat-message.ai {
+            align-items: flex-start;
+        }
+
+        .chat-message p {
+            max-width: 70%;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin: 0.2rem 0;
+        }
+
+        .chat-message.user p {
+            background: #3498db;
+            color: white;
+        }
+
+        body.dark-theme .chat-message.user p {
+            background: #1e4d7a;
+        }
+
+        .chat-message.ai p {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        body.dark-theme .chat-message.ai p {
+            background: #555;
+            color: #e0e0e0;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        body.dark-theme .chat-input {
+            background: #2c2c2c;
+            border-top: 1px solid #555;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        body.dark-theme .chat-input input {
+            background: #3c3c3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .chat-input button {
+            padding: 0.8rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        body.dark-theme .chat-input button {
+            background: #1e4d7a;
+        }
+
+        .chat-input button:hover {
+            background: #2980b9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                margin: 0 0.5rem;
+            }
+
+            .skills-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-overlay {
+                width: 100%;
+                height: 80vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chat-header img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">My Portfolio</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="hero-content">
+            <img src="picture.jpeg" alt="Profile Picture" class="profile-pic">
+            <h1>Ananya Das</h1>
+            <p>I’m a passionate frontend developer skilled in UI design and data analysis. Explore my work and let’s connect!</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <p>I am a passionate and detail-oriented professional with a strong foundation in Data Analysis, UI Design, and Frontend Development. My skill set bridges the gap between data-driven decision-making and user-centric digital experiences.With hands-on experience in tools like Excel, Python (Pandas, NumPy), Power BI, and SQL, I turn raw data into clear insights that drive results. At the same time, my expertise in HTML, CSS, JavaScript, I enjoy creating seamless front-end experiences. Whether it's building dashboards, designing wireframes, or coding responsive web pages, I aim to deliver both functionality and aesthetic clarity</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-content">
+            <div class="skills-grid">
+                <div class="skill-item">HTML</div>
+                <div class="skill-item">CSS</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">UI&UX design</div>
+                <div class="skill-item">Power Bi</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">SQL</div>
+                <div class="skill-item">DBMS</div>
+                <div class="skill-item">Data Analysis</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-content">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="task manager.jpeg" alt="Task Manager">
+                    <h3>Task Manager</h3>
+                    <p>A web application built with React and Node.js for efficient task management.</p>
+                </div>
+                <div class="project-card">
+                    <img src="e commerce platform.jpeg" alt="E-Commerce Platform">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A responsive e-commerce site with secure payment integration.</p>
+                </div>
+                <div class="project-card">
+                    <img src="data dashboard.jpeg" alt="Data Dashboard">
+                    <h3>Data Dashboard</h3>
+                    <p>An interactive data visualization tool using D3.js and Python.</p>
+                </div>
+                <div class="project-card">
+                    <img src="fitness tracker.jpeg" alt="Fitness Tracker">
+                    <h3>Fitness Tracker</h3>
+                    <p>A mobile-friendly app to track workouts and nutrition plans.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact-content">
+            <div id="contact-form">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                <button onclick="submitForm()">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="chat-bubble" id="chat-bubble" onclick="openChat()">☁️Ask Anything About Me</div>
+
+    <div class="chat-overlay" id="chat-overlay">
+        <div class="chat-header">
+            <img src="picture.jpeg" alt="Profile Picture">
+            <h3>Chat with Me</h3>
+            <button class="chat-close" onclick="closeChat()">✕</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message ai">
+                <p>Hi there!👋 I am Ananya Das, what do you want to know about me?</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+         const myFullName = "Ananya das";
+        const myDescription = "I'm a frontend developer with a passion for clean UI design and insightful data analysis. I enjoy turning ideas into interactive, user-friendly web experiences. Ask me anything about my skills, projects, or how I build digital products!I’ve worked on task managers, fitness trackers, e-commerce platforms, and data dashboards — combining great design with powerful functionality.";
+
+        function submitForm() {
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+            if (name && email && message) {
+                alert(`Message sent!\nName: ${name.value}\nEmail: ${email.value}\nMessage: ${message.value}`);
+                document.getElementById('contact-form').reset();
+            } else {
+                console.error('Form elements not found');
+            }
+        }
+
+        function openChat() {
+            const chatOverlay = document.getElementById('chat-overlay');
+            const chatBubble = document.getElementById('chat-bubble');
+            const chatBody = document.getElementById('chat-body');
+            if (chatOverlay && chatBubble && chatBody) {
+                chatOverlay.style.display = 'flex';
+                chatBubble.style.display = 'none';
+                chatBody.innerHTML = `<div class="chat-message ai"><p>Hi there👋, I am Ananya Das, what do you want to know about me?</p></div>`;
+                scrollToBottom();
+            } else {
+                console.error('Chat elements not found');
+            }
+        }
+
+        function closeChat() {
+            const chatOverlay = document.getElementById('chat-overlay');
+            const chatBubble = document.getElementById('chat-bubble');
+            if (chatOverlay && chatBubble) {
+                chatOverlay.style.display = 'none';
+                chatBubble.style.display = 'block';
+            } else {
+                console.error('Chat elements not found');
+            }
+        }
+
+        async function mockGeminiAPI(message) {
+            // Simulate Gemini API response
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    let response = "Hey, thanks for asking! I'm happy to chat.";
+                    if (message.toLowerCase().includes('project') || message.toLowerCase().includes('work')) {
+                        response = `I love my projects! ${myDescription} Want details on one?`;
+                    } else if (message.toLowerCase().includes('skill') || message.toLowerCase().includes('technology')) {
+                        response = `I'm into web tech! ${myDescription} Any skill you're curious about?`;
+                    } else if (message.toLowerCase().includes('about') || message.toLowerCase().includes('who')) {
+                        response = `That's me! ${myDescription} What's next?`;
+                    } else if (message.toLowerCase().includes('hobby') || message.toLowerCase().includes('interest')) {
+                        response = `I enjoy coding and exploring new tech. ${myDescription} What about you?`;
+                    }
+                    resolve(response);
+                }, 1000); // Simulate API delay
+            });
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const chatBody = document.getElementById('chat-body');
+            if (!input || !chatBody) {
+                console.error('Chat input or body not found');
+                return;
+            }
+
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Append user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.innerHTML = `<p>${message}</p>`;
+            chatBody.appendChild(userMessage);
+
+            // Show typing animation
+            const typingMessage = document.createElement('div');
+            typingMessage.className = 'chat-message typing';
+            typingMessage.innerHTML = `<p>typing...</p>`;
+            chatBody.appendChild(typingMessage);
+            scrollToBottom();
+
+            // Simulate API call
+            const response = await mockGeminiAPI(message);
+
+            // Remove typing animation
+            chatBody.removeChild(typingMessage);
+
+            // Append AI response
+            const aiMessage = document.createElement('div');
+            aiMessage.className = 'chat-message ai';
+            aiMessage.innerHTML = `<p>${response}</p>`;
+            chatBody.appendChild(aiMessage);
+
+            input.value = '';
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const chatBody = document.getElementById('chat-body');
+            if (chatBody) {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } else {
+                console.error('Chat body not found');
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (body && themeToggle) {
+                body.classList.toggle('dark-theme');
+                themeToggle.textContent = body.classList.contains('dark-theme') ? '☀️' : '🌙';
+            } else {
+                console.error('Body or theme toggle not found');
+            }
+        }
+    </script>
+</body>
+</html>
